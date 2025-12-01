@@ -5,9 +5,11 @@ import { useUser } from '@clerk/nextjs';
 import { Button } from "@/components/ui/button";
 import { Filter, Grid3X3, List, Loader2, Plus, Rocket, Search, Trello } from 'lucide-react';
 import { useBoards } from '@/lib/hooks/useBoards';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
+import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 export default function DashboardPage() {
     const {user} = useUser();
@@ -183,6 +185,41 @@ export default function DashboardPage() {
                             className='pl-10'
                         />
                     </div>
+
+                    {/* Boards Grid/List */}
+                    {boards.length === 0 ? (
+                        <div>No boards yet</div>
+                    ) : viewMode === "grid" ? (
+                        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6'>
+                            {boards.map((board, key) => (
+                                <Link href={`/boards/${board.id}`} key={key}>
+                                    <Card className=' hover:shadow-lg transition-shadow cursor-pointer group '>
+                                        <CardHeader className='pb-3'>
+                                            <div className='flex items-center justify-between '>
+                                                <div className={`w-4 h-4 ${board.color} rounded`}/>
+                                                <Badge className='text-xs' variant="secondary">New</Badge>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <CardTitle>{board.title}</CardTitle>
+                                            <CardDescription>{board.description}</CardDescription>
+                                            <div>
+                                                <span>
+                                                    Created{" "}
+                                                    {new Date(board.created_at).toLocaleDateString()}
+                                                </span>
+                                                <span>
+                                                    Updated{" "}
+                                                    {new Date(board.updated_at).toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                        ))}</div>
+                    ) : (
+                        <div></div>
+                    )}
                 </div>
             </main>
         </div>
