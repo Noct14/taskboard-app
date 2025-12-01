@@ -3,27 +3,29 @@
 import Navbar from '@/components/navbar'
 import { useUser } from '@clerk/nextjs';
 import { Button } from "@/components/ui/button";
-import { Loader2, Plus, Rocket, Trello } from 'lucide-react';
+import { Filter, Grid3X3, List, Loader2, Plus, Rocket, Trello } from 'lucide-react';
 import { useBoards } from '@/lib/hooks/useBoards';
 import { Card, CardContent } from '@/components/ui/card';
+import { useState } from 'react';
 
 export default function DashboardPage() {
     const {user} = useUser();
     const {createBoard, boards, loading, error } = useBoards();
+    const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
     const handleCreateBoard = async () => {
         await createBoard({ title: "New Board" })
     };
 
-    if (loading) {
-        return (
-        <div> 
-            <Loader2/> 
-            <span>
-                Loading your boards...
-            </span>
-        </div>)
-    }
+    // if (loading) {
+    //     return (
+    //     <div> 
+    //         <Loader2/> 
+    //         <span>
+    //             Loading your boards...
+    //         </span>
+    //     </div>)
+    // }
 
     if (error) {
         return (
@@ -143,10 +145,34 @@ export default function DashboardPage() {
 
                         <div className='flex flex-col sm:flex-row items-stretch sm:items-center space-y-4 sm:space-y-0'>
                             <div className='flex items-center space-x-2 bg-white border p-1'>
-                                
+                                <Button 
+                                    variant={viewMode === "grid" ? "default" : "ghost"} 
+                                    size="sm"
+                                    onClick={() => setViewMode("grid")}
+                                >
+                                    <Grid3X3/>
+                                </Button>
+                                <Button 
+                                    variant={viewMode === "list" ? "default" : "ghost"} 
+                                    size="sm"
+                                    onClick={() => setViewMode("list")}
+                                >
+                                    <List/>
+                                </Button>
                             </div>
+
+                            <Button variant="outline" size="sm">
+                                <Filter/>
+                                Filter
+                            </Button>
+
+                            <Button onClick={handleCreateBoard}>
+                                <Plus/>
+                                Create Board
+                            </Button>
                         </div>
                     </div>
+
                 </div>
             </main>
         </div>
