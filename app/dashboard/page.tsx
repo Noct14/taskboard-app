@@ -128,6 +128,26 @@ export default function DashboardPage() {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Boards */}
+                <div className='mb-6 sm:mb-8'>
+                    <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0'>
+                        <div>
+                            <h2 className='text-xl sm:text-2xl font-bold text-gray-900'>
+                                Your Boards
+                            </h2>
+                            <p className='text-gray-600'>
+                                Manage your projects and task
+                            </p>
+                        </div>
+
+                        <div className='flex flex-col sm:flex-row items-stretch sm:items-center space-y-4 sm:space-y-0'>
+                            <div className='flex items-center space-x-2 bg-white border p-1'>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     )
