@@ -3,10 +3,11 @@
 import Navbar from '@/components/navbar'
 import { useUser } from '@clerk/nextjs';
 import { Button } from "@/components/ui/button";
-import { Filter, Grid3X3, List, Loader2, Plus, Rocket, Trello } from 'lucide-react';
+import { Filter, Grid3X3, List, Loader2, Plus, Rocket, Search, Trello } from 'lucide-react';
 import { useBoards } from '@/lib/hooks/useBoards';
 import { Card, CardContent } from '@/components/ui/card';
 import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 
 export default function DashboardPage() {
     const {user} = useUser();
@@ -172,7 +173,16 @@ export default function DashboardPage() {
                             </Button>
                         </div>
                     </div>
-
+                    
+                    {/* Search Bar */}
+                    <div className=' relative mb-4 sm:mb-6'>
+                        <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400'/>
+                        <Input 
+                            id="search" 
+                            placeholder='Search boards...' 
+                            className='pl-10'
+                        />
+                    </div>
                 </div>
             </main>
         </div>
