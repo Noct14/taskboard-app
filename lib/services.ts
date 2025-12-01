@@ -34,6 +34,18 @@ export const boardService = {
 
 export const columnService = {
 
+    // async getBoards(supabase: SupabaseClient, userId: string): Promise<Board[]>  {
+    //     const {data, error} = await supabase
+    //     .from("boards")
+    //     .select("*")
+    //     .eq("user_id", userId)
+    //     .order("created_at", {ascending: false });
+
+    //     if (error) throw error
+
+    //     return data || [];
+    // },
+
     async createColumn(
         supabase: SupabaseClient,
         column: Omit<Column, "id" | "created_at">
