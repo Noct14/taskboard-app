@@ -1,6 +1,4 @@
-import { createClient } from '@/lib/supabase/client';
 import { Board, Column } from './supabase/models';
-import { title } from 'process';
 import { SupabaseClient } from '@supabase/supabase-js';
 
 
@@ -79,7 +77,10 @@ export const boardDataService = {
 
         await Promise.all(
             defaultColumns.map((column) => 
-            columnService.createColumn(supabase, { ...column, board_id: board.id})
+            columnService.createColumn(supabase, { 
+                ...column, 
+                board_id: board.id, 
+                user_id: boardData.userId,})
             )
         );
 
