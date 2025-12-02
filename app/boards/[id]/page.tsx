@@ -130,6 +130,26 @@ export default function BoardPage() {
                                 ))}
                             </div>
                         </div>
+
+                        {/* <div className="space-y-2">
+                            <Label>Assignee</Label>
+                            <div className="flex flex-wrap gap-2">
+                                {["low", "medium", "high"].map((priority, key) => (
+                                    <Button key={key} variant={"outline"} size="sm">
+                                        {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                                    </Button>
+                                ))}
+                            </div>
+                        </div> */}
+                        <div className="space-y-2">
+                            <Label>Due Date</Label>
+                            <Input type="date"/>
+                        </div>
+
+                        <div className="flex justify-between pt-4">
+                            <Button type="button" variant={"outline"}>Clear Filters</Button>
+                            <Button type="button" onClick={() => setIsFilterOpen(false)}>Apply Filters</Button>
+                        </div>
                     </div>
                 </DialogContent>
             </Dialog>
