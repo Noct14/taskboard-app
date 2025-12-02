@@ -227,6 +227,14 @@ export default function BoardPage() {
                                         </SelectContent>
                                     </Select>
                                 </div>
+                                <div>
+                                    <Label>Due Date</Label>
+                                    <Input type="date" id="dueDate" name="dueDate"/>
+                                </div>
+
+                                <div>
+                                    <Button type="submit">Create Task</Button>
+                                </div>
                             </form>
                         </DialogContent>
                     </Dialog>
