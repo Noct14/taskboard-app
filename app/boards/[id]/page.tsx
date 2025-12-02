@@ -35,8 +35,8 @@ export default function BoardPage() {
                             Edit Board
                         </DialogTitle>
                     </DialogHeader>
-                    <form>
-                        <div className="grid gap-4 py-4">
+                    <form className="space-y-4 ">
+                        <div className="space-y-2">
                             <Label htmlFor="boardTitle">Board Title</Label>
                             <Input 
                                 id="boardTitle" 
@@ -47,7 +47,7 @@ export default function BoardPage() {
                             />
                         </div>
 
-                        <div>
+                        <div className="space-y-2">
                             <Label>Board Color</Label>
                                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
                                 {[
