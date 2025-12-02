@@ -115,7 +115,22 @@ export default function BoardPage() {
                         <DialogTitle>
                             Filter Task
                         </DialogTitle>
+                        <p className="text-sm text-gray-600">
+                            Filter task by priority, assignee, or due date
+                        </p>
                     </DialogHeader>
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <Label>Priority</Label>
+                            <div className="flex flex-wrap gap-2">
+                                {["low", "medium", "high"].map((priority, key) => (
+                                    <Button key={key} variant={"outline"} size="sm">
+                                        {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                                    </Button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </DialogContent>
             </Dialog>
         </div>
