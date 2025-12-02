@@ -214,7 +214,7 @@ export default function BoardPage() {
                                 </div>
                                 <div>
                                     <Label>Priority</Label>
-                                    <Select name="priority">
+                                    <Select name="priority" defaultValue="medium">
                                         <SelectTrigger>
                                             <SelectValue/>
                                         </SelectTrigger>
