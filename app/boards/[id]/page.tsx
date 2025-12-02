@@ -1,7 +1,6 @@
 'use client'; 
 
 import Navbar from "@/components/navbar";
-import Column from "@/components/column";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -12,11 +11,60 @@ import { useBoard } from "@/lib/hooks/useBoards";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
+import { ColumnWithTasks } from "@/lib/supabase/models";
+import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
+
+function Column ({ 
+    column, 
+    children, 
+    onCreateTask, 
+    onEditColumn, 
+}: {
+    column: ColumnWithTasks;
+    children: React.ReactNode;
+    onCreateTask: (taskData: any) => Promise<void>;
+    onEditColumn: (column: ColumnWithTasks) => void;
+}) {
+
+    return (
+        <div className="w-full lg:shrink-0 lg:w-80">
+            <div className="bg-white rounded-lg shadow-sm border">
+                {/* Column Header */}
+                <div className="p-3 sm:p-4 border-b">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2 min-w-0">
+                            <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{column.title}</h3>
+                            <Badge 
+                                variant={"secondary"}
+                                className="text-xs shrink-0"
+                            >
+                                {column.tasks.length}
+                            </Badge>
+                        </div>
+                        <Button 
+                            variant={"ghost"} 
+                            size={"sm"}
+                            className="shrink-0"
+                        >
+                            <MoreHorizontal/>
+                        </Button>
+                    </div>
+                </div>
+
+                {/* Column Content */}
+                <div className="p-2">
+                    {children}
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default function BoardPage() {
     const { id } = useParams<{ id: string }>();
-    const { board, updateBoard, columns } = useBoard(id);
+    const { board, updateBoard, columns, createRealTask } = useBoard(id);
 
     const [ isEditingTitle, setIsEdtitingTitle] = useState(false);
     const [ newTitle, setNewTitle ] = useState("");
@@ -39,6 +87,40 @@ export default function BoardPage() {
 
         } catch (error) {
             
+        }
+    }
+
+    async function createTask(taskData: {
+        title: string;
+        description?: string;
+        assignee?: string;
+        dueDate?: string;
+        priority: "low" | "medium" | "high";
+    }) {
+        const targetColumn = columns[0]
+        if (!targetColumn) {
+            throw new Error("No column available to add task")
+        }
+
+        await createRealTask(targetColumn.id, taskData);
+    }
+
+    async function handleCreateTask(e: any) {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget);
+        const taskData = {
+            title: formData.get("title") as string,
+            description: (formData.get("description") as string) || undefined,
+            assignee: (formData.get("assignee") as string) || undefined,
+            dueDate: (formData.get("dueDate") as string) || undefined,
+            priority: (formData.get("priority") as | "low" | "medium" | "high") || "medium",
+        };
+
+        if (taskData.title.trim()) {
+            await createTask(taskData)
+
+            const trigger = document.querySelector('[data-state="open"') as HTMLElement
+            if (trigger) trigger.click();
         }
     }
 
@@ -186,7 +268,7 @@ export default function BoardPage() {
                                 </p>
                             </DialogHeader>
 
-                            <form className="space-y-4">
+                            <form className="space-y-4" onSubmit={handleCreateTask}>
                                 <div className="space-y-2">
                                     <Label>Title *</Label>
                                     <Input 
@@ -243,7 +325,18 @@ export default function BoardPage() {
                 {/* Board Columns */}
                 <div>
                     {columns.map((column, key) => (
-                        <Column key={key} column={column}></Column>
+                        <Column 
+                            key={key} 
+                            column={column} 
+                            onCreateTask={() => {}} 
+                            onEditColumn={() => {}}
+                        >
+                            <div>
+                                {column.tasks.map((task, key) => (
+                                    <div>{task.title}</div>
+                                ))}
+                            </div>
+                        </Column>
                     ))}
                 </div>
         
