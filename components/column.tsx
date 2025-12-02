@@ -1,6 +1,7 @@
 
 import { ColumnWithTasks } from "@/lib/supabase/models";
 import React from 'react'
+import { Badge } from "./ui/badge";
 
 function Column ({ 
     column, 
@@ -22,6 +23,9 @@ function Column ({
                     <div>
                         <div>
                             <h3>{column.title}</h3>
+                            <Badge>
+                                {column.tasks.length}
+                            </Badge>
                         </div>
                     </div>
                 </div>
