@@ -1,6 +1,7 @@
 'use client'; 
 
 import Navbar from "@/components/navbar";
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,11 +12,29 @@ import { useState } from "react";
 
 export default function BoardPage() {
     const { id } = useParams<{ id: string }>();
-    const { board } = useBoard(id);
+    const { board, updateBoard } = useBoard(id);
 
     const [ isEditingTitle, setIsEdtitingTitle] = useState(false);
     const [ newTitle, setNewTitle ] = useState("");
     const [ newColor, setNewColor ] = useState("");
+
+    async function handleUpdateBoard(e: React.FormEvent) {
+        e.preventDefault();
+
+        if (!newTitle.trim() || !board) return;
+
+        try {
+            await updateBoard(board.id, {
+                title: newTitle.trim(), 
+                color: newColor || board.color
+            });
+
+            setIsEdtitingTitle(false);
+
+        } catch (error) {
+            
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -35,7 +54,7 @@ export default function BoardPage() {
                             Edit Board
                         </DialogTitle>
                     </DialogHeader>
-                    <form className="space-y-4 ">
+                    <form className="space-y-4" onSubmit={handleUpdateBoard}>
                         <div className="space-y-2">
                             <Label htmlFor="boardTitle">Board Title</Label>
                             <Input 
@@ -78,6 +97,10 @@ export default function BoardPage() {
                                 </div>
                         </div>
 
+                        <div className="flex justify-end space-x-2">
+                            <Button type="button" variant="outline" onClick={() => setIsEdtitingTitle(false)}>Cancel</Button>
+                            <Button type="submit" >Save Changes</Button>
+                        </div>
                     </form>
                 </DialogContent>
             </Dialog>
