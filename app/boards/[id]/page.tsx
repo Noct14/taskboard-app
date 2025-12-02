@@ -1,6 +1,7 @@
 'use client'; 
 
 import Navbar from "@/components/navbar";
+import Column from "@/components/column";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -8,39 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useBoard } from "@/lib/hooks/useBoards";
-import { ColumnWithTasks } from "@/lib/supabase/models";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-
-function Column ({ 
-    column, 
-    children, 
-    onCreateTask, 
-    onEditColumn, 
-}: {
-    column: ColumnWithTasks;
-    children: React.ReactNode;
-    onCreateTask: (taskData: any) => Promise<void>;
-    onEditColumn: (column: ColumnWithTasks) => void;
-}) {
-
-    return (
-        <div>
-            <div>
-                {/* Column Header */}
-                <div>
-                    <div>
-                        <div>
-                            <h3>{column.title}</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 export default function BoardPage() {
     const { id } = useParams<{ id: string }>();
