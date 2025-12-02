@@ -131,7 +131,7 @@ export function useBoard(boardId: string) {
 
             setColumns((prev) => 
                 prev.map((col) => 
-                    col.id === columnId ? {...col, taks: [...col.tasks, newTask]} : col
+                    col.id === columnId ? {...col, tasks: [...col.tasks, newTask]} : col
             ))
 
             return newTask;
