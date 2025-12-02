@@ -105,7 +105,7 @@ export const taskService = {
             columns!inner(board_id)
             `
         )
-        .eq("columns.board_Id", boardId)
+        .eq("columns.board_id", boardId)
         .order("sort_order", {ascending: true });
 
         if (error) throw error
