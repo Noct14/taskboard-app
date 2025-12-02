@@ -186,8 +186,8 @@ export default function BoardPage() {
                                 </p>
                             </DialogHeader>
 
-                            <form>
-                                <div>
+                            <form className="space-y-4">
+                                <div className="space-y-2">
                                     <Label>Title *</Label>
                                     <Input 
                                         id="title" 
@@ -195,7 +195,7 @@ export default function BoardPage() {
                                         placeholder="Enter task title"
                                     />
                                 </div>
-                                <div>
+                                <div className="space-y-2">
                                     <Label>Description</Label>
                                     <Textarea 
                                         id="description" 
@@ -204,7 +204,7 @@ export default function BoardPage() {
                                         rows={3}
                                     />
                                 </div>
-                                <div>
+                                <div className="space-y-2">
                                     <Label>Assignee</Label>
                                     <Input 
                                         id="assignee" 
@@ -212,7 +212,7 @@ export default function BoardPage() {
                                         placeholder="Who should do this?"
                                     />
                                 </div>
-                                <div>
+                                <div className="space-y-2">
                                     <Label>Priority</Label>
                                     <Select name="priority" defaultValue="medium">
                                         <SelectTrigger>
@@ -227,12 +227,12 @@ export default function BoardPage() {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div>
+                                <div className="space-y-2">
                                     <Label>Due Date</Label>
                                     <Input type="date" id="dueDate" name="dueDate"/>
                                 </div>
 
-                                <div>
+                                <div className="flex justify-end space-x-2 pt-4">
                                     <Button type="submit">Create Task</Button>
                                 </div>
                             </form>
