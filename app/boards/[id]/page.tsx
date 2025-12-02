@@ -5,14 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useBoard } from "@/lib/hooks/useBoards";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
 
 export default function BoardPage() {
     const { id } = useParams<{ id: string }>();
-    const { board, updateBoard } = useBoard(id);
+    const { board, updateBoard, columns } = useBoard(id);
 
     const [ isEditingTitle, setIsEdtitingTitle] = useState(false);
     const [ newTitle, setNewTitle ] = useState("");
@@ -153,6 +157,81 @@ export default function BoardPage() {
                     </div>
                 </DialogContent>
             </Dialog>
+
+            {/* Board Content */}
+            <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
+                {/* Stats */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y0">
+                    <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                        <div className="text-sm text-gray-600">
+                            <span className="font-medium">Total Task: </span>
+                            {columns.reduce((sum, col) => sum + col.tasks.length, 0)}
+                        </div>
+                    </div>
+                    {/* Add Task Dialog */}
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="w-full sm:w-auto">
+                                <Plus/>
+                                Add Task
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
+                            <DialogHeader>
+                                <DialogTitle>
+                                    Create New Task
+                                </DialogTitle>
+                                <p className="text-sm text-gray-600">
+                                    Add a task to the board
+                                </p>
+                            </DialogHeader>
+
+                            <form>
+                                <div>
+                                    <Label>Title *</Label>
+                                    <Input 
+                                        id="title" 
+                                        name="title" 
+                                        placeholder="Enter task title"
+                                    />
+                                </div>
+                                <div>
+                                    <Label>Description</Label>
+                                    <Textarea 
+                                        id="description" 
+                                        name="description" 
+                                        placeholder="Enter task description"
+                                        rows={3}
+                                    />
+                                </div>
+                                <div>
+                                    <Label>Assignee</Label>
+                                    <Input 
+                                        id="assignee" 
+                                        name="assignee" 
+                                        placeholder="Who should do this?"
+                                    />
+                                </div>
+                                <div>
+                                    <Label>Priority</Label>
+                                    <Select name="priority">
+                                        <SelectTrigger>
+                                            <SelectValue/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {["low", "medium", "high"].map((priority, key) => (
+                                                <SelectItem key={key} value={priority}>
+                                                    {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </form>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+            </main>
         </div>
   )
 }
