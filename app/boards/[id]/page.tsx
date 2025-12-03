@@ -497,6 +497,32 @@ export default function BoardPage() {
         setEditingColumnTitle(column.title)
     }
 
+    const filteredColumns = columns.map((column) => ({
+        ...column,
+        tasks: column.tasks.filter((task) => {
+        // Filter by priority
+        if (
+            filters.priority.length > 0 &&
+            !filters.priority.includes(task.priority)
+        ) {
+            return false;
+        }
+
+        // Filter by due date
+
+        if (filters.dueDate && task.due_date) {
+            const taskDate = new Date(task.due_date).toDateString();
+            const filterDate = new Date(filters.dueDate).toDateString();
+
+            if (taskDate !== filterDate) {
+            return false;
+            }
+        }
+
+        return true;
+        }),
+    }));
+
     return (
         <>
             <div className="min-h-screen bg-gray-50">
@@ -624,7 +650,13 @@ export default function BoardPage() {
                             </div> */}
                             <div className="space-y-2">
                                 <Label>Due Date</Label>
-                                <Input type="date"/>
+                                <Input
+                                type="date"
+                                value={filters.dueDate || ""}
+                                onChange={(e) =>
+                                    handleFilterChange("dueDate", e.target.value || null)
+                                }
+                                />
                             </div>
 
                             <div className="flex justify-between pt-4">
@@ -740,7 +772,7 @@ export default function BoardPage() {
                             lg:[&::-webkit-scrollbar-thumb]:bg-gray-300 lg:[&::-webkit-scrollbar-thumb]:rounded-full 
                             space-y-4 lg:space-y-0"
                         >
-                            {columns.map((column, key) => (
+                            {filteredColumns.map((column, key) => (
                                 <DroppableColumn 
                                     key={key} 
                                     column={column} 
