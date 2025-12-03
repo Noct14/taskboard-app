@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
@@ -79,9 +79,9 @@ function Task({task} : { task : Task }) {
     }
 
     return (
-        <div className="cursor-pointer hover:shadow-md transition-shadow">
-            <Card className="p-3 sm:p4">
-                <CardContent>
+        <div>
+            <Card className="cursor-pointer hover:shadow-md transition-shadow">
+                <CardContent className="p-3 sm:p-4">
                     <div className="space-y-2 sm:space-y-3">
                         {/* Task Header */}
                         <div className="flex items-start justify-between">
@@ -89,7 +89,9 @@ function Task({task} : { task : Task }) {
                         </div>
 
                         {/* Task Desc */}
-                        <p className="text-xs text-gray-600 line-clamp-2">{task.description || "No description."}</p>
+                        <p className="text-xs text-gray-600 line-clamp-2">
+                            {task.description || "No description."}
+                        </p>
 
                         {/* Task Meta */}
                         <div className="flex items-center justify-between">
@@ -297,7 +299,7 @@ export default function BoardPage() {
             {/* Board Content */}
             <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
                 {/* Stats */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y0">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0">
                     <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                         <div className="text-sm text-gray-600">
                             <span className="font-medium">Total Task: </span>
