@@ -289,6 +289,12 @@ export default function BoardPage() {
 
     const [ activeTask, setActiveTask ] = useState<Task | null>(null);
 
+    const [ filters, setFilters ] = useState({
+        priority: [] as string[],
+        assignee: [] as string[],
+        dueDate: null as string | null,
+    })
+
     const sensors = useSensors(useSensor(
         PointerSensor, {
             activationConstraint: {
@@ -296,6 +302,24 @@ export default function BoardPage() {
             }
         }
     ))
+
+    function handleFilterChange(
+        type: "priority" | "assignee" | "dueDate",
+        value: string | string[] | null
+    ) {
+        setFilters((prev) => ({
+        ...prev,
+        [type]: value,
+        }));
+    }
+
+    function clearFilters() {
+        setFilters({
+        priority: [] as string[],
+        assignee: [] as string[],
+        dueDate: null as string | null,
+        });
+    }
 
     async function handleUpdateBoard(e: React.FormEvent) {
         e.preventDefault();
@@ -484,7 +508,11 @@ export default function BoardPage() {
                         setIsEdtitingTitle(true);
                     }}
                     onFilterClick={() => setIsFilterOpen(true) }
-                    filterCount={2}
+                    filterCount={Object.values(filters).reduce(
+                        (count, v) =>
+                        count + (Array.isArray(v) ? v.length : v !== null ? 1 : 0),
+                        0
+                    )}
                 />
 
                 <Dialog open={isEditingTitle} onOpenChange={setIsEdtitingTitle}>
@@ -560,9 +588,26 @@ export default function BoardPage() {
                                 <Label>Priority</Label>
                                 <div className="flex flex-wrap gap-2">
                                     {["low", "medium", "high"].map((priority, key) => (
-                                        <Button key={key} variant={"outline"} size="sm">
-                                            {priority.charAt(0).toUpperCase() + priority.slice(1)}
-                                        </Button>
+                                    <Button
+                                    onClick={() => {
+                                        const newPriorities = filters.priority.includes(
+                                        priority
+                                        )
+                                        ? filters.priority.filter((p) => p !== priority)
+                                        : [...filters.priority, priority];
+
+                                        handleFilterChange("priority", newPriorities);
+                                    }}
+                                    key={key}
+                                    variant={
+                                        filters.priority.includes(priority)
+                                        ? "default"
+                                        : "outline"
+                                    }
+                                    size="sm"
+                                    >
+                                    {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                                    </Button>
                                     ))}
                                 </div>
                             </div>
@@ -583,8 +628,16 @@ export default function BoardPage() {
                             </div>
 
                             <div className="flex justify-between pt-4">
-                                <Button type="button" variant={"outline"}>Clear Filters</Button>
-                                <Button type="button" onClick={() => setIsFilterOpen(false)}>Apply Filters</Button>
+                                <Button
+                                    type="button"
+                                    variant={"outline"}
+                                    onClick={clearFilters}
+                                >
+                                    Clear Filters
+                                </Button>
+                                <Button type="button" onClick={() => setIsFilterOpen(false)}>
+                                    Apply Filters
+                                </Button>
                             </div>
                         </div>
                     </DialogContent>
