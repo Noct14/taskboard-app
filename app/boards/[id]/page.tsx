@@ -273,7 +273,7 @@ function TaskOverlay({task} : { task : Task }) {
 
 export default function BoardPage() {
     const { id } = useParams<{ id: string }>();
-    const { board, updateBoard, columns, createRealTask, setColumns, moveTask, createColumn } = useBoard(id);
+    const { board, updateBoard, columns, createRealTask, setColumns, moveTask, createColumn, updateColumn } = useBoard(id);
 
     const [ isEditingTitle, setIsEdtitingTitle ] = useState(false);
     const [ newTitle, setNewTitle ] = useState("");
@@ -458,12 +458,13 @@ export default function BoardPage() {
     async function handleUpdateColumn(e: React.FormEvent) {
         e.preventDefault()
 
-        if(!newColumnTitle.trim()) return;
+        if(!editingColumnTitle.trim() || !editingColumn) return;
 
-        await createColumn(newColumnTitle.trim());
+        await updateColumn(editingColumn.id, editingColumnTitle.trim());
 
-        setNewColumnTitle("")
-        setIsCreatingColumn(false);
+        setEditingColumnTitle("");
+        setIsEditingColumn(false);
+        setEditingColumn(null);
     }
     
     function handleEditColumn(column: ColumnWithTasks) {
@@ -793,7 +794,7 @@ export default function BoardPage() {
                                 </Button>
                                 <Button 
                                     type="submit"
-                                >Create Column</Button>
+                                >Edit Column</Button>
                             </div>
                         </form>
                 </DialogContent>
