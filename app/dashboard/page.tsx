@@ -118,7 +118,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Stats */}
-                <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8'>                    
+                <div className='grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8'>                    
                     <Card>
                         <CardContent className='p-4 sm:p-6'>
                             <div className='flex items-center justify-between'>
@@ -154,23 +154,6 @@ export default function DashboardPage() {
                                 </div>
                                 <div className='h-10 w-10 sm:h-12 sm:w-12 bg-purple-100 rounded-lg flex items-center justify-center'>
                                     📊
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <Card>
-                        <CardContent className='p-4 sm:p-6'>
-                            <div className='flex items-center justify-between'>
-                                <div>
-                                    <p className='text-xs sm:text-sm font-medium text-gray-600'>
-                                        Active Projects
-                                    </p>
-                                    <p className='text-xl sm:text-2xl font-bold text-gray-900'>
-                                        {boards.length}
-                                    </p>
-                                </div>
-                                <div className='h-10 w-10 sm:h-12 sm:w-12 bg-green-100 rounded-lg flex items-center justify-center'>
-                                    <Rocket className='h-5 w-5 sm:h-6 sm:w-6 text-green-600'/>
                                 </div>
                             </div>
                         </CardContent>
