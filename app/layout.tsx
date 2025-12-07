@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Taskify",
   description: "Organize work and life with Taskify",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
