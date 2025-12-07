@@ -7,6 +7,8 @@ Taskify is a modern and intuitive Kanban-based task management application built
 ![Supabase](https://img.shields.io/badge/Supabase-0.8.0-green?style=for-the-badge&logo=supabase)
 ![Clerk](https://img.shields.io/badge/Clerk-6.35.5-purple?style=for-the-badge)
 
+![Taskify Screenshot](public/taskify.jpg)
+
 ## ✨ Features
 
 ### 🎯 Task Management
