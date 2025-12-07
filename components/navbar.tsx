@@ -137,7 +137,7 @@ export default function Navbar({
                                     size="sm" 
                                     className='text-xs sm:text-sm'
                                 >
-                                    Sign Out
+                                    Sign Up
                                 </Button>
                             </SignUpButton>
                         </div>
